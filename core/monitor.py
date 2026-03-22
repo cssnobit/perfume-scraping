@@ -1,20 +1,13 @@
-import json
-from scraper import get_product_data
+from scrapers.anmy import get_product_data
 from datetime import datetime
+<<<<<<< HEAD:monitor.py
+=======
+from notifications.dispatcher import notify
+from core.storage import load_history, save_history
+>>>>>>> f7ad504 (Notifications by Discord Webhook):core/monitor.py
 
 HISTORY_FILE = "files/history.json"
 
-def load_history():
-    try:
-        with open(HISTORY_FILE, "r", encoding="utf-8") as f:
-            return json.load(f)
-    except FileNotFoundError:
-        return {}
-    
-def save_history(history):
-    with open(HISTORY_FILE, "w", encoding="utf-8") as f:
-        json.dump(history, f, indent=4, ensure_ascii=False)
-    
 def monitor(urls):
     history = load_history()
 
@@ -43,6 +36,7 @@ def monitor(urls):
                 diff = last_price - now_price
     
                 percent = (diff / last_price) * 100
+<<<<<<< HEAD:monitor.py
                 print(f"🔥 CORRE QUE O PREÇO CAIU!!! De R${last_price:.2f} para R${now_price:.2f}. {percent:.2f}% de DESCONTO! 🫨")
 
             elif now_price > last_price:
@@ -52,6 +46,14 @@ def monitor(urls):
                 print(f"📈 SUBIDA NOS PREÇOS!!! De R${last_price:.2f} para R${now_price:.2f}. {percent:.2f}% de ACRÉSCIMO! 😫")
 
 
+=======
+                message = (50*"=" +
+                           f"\n🔥 CORRE QUE O PREÇO CAIU!!!\nDe **R${last_price:.2f}** por apenas **R${now_price:.2f}.** {percent:.0f}% de DESCONTO! 🫨" + 
+                           f"\n💎**{product["name"]}**" +
+                           f"\n🔗 [Clique aqui para acessar]({url})")
+                notify(message)
+
+>>>>>>> f7ad504 (Notifications by Discord Webhook):core/monitor.py
         history[url] = {
             "title": product_name,
             "last_price": now_price,

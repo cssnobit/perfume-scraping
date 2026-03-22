@@ -1,5 +1,4 @@
 import requests as rq
-from bs4 import BeautifulSoup as bs
 import re
 
 # url = "https://www.anmyperfumes.com.br/stronger-with-you-intensely-eau-de-parfum-feminino-giorgio-armani"
